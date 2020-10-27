@@ -1,5 +1,7 @@
 /**
  * @author Jacob Huebner
+ * 
+ * Scored 9/9 (100%)
  */
 
 import java.io.BufferedReader
