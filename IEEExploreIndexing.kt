@@ -1,3 +1,9 @@
+/**
+ * @author Jacob Huebner
+ * 
+ * Scored 19/19 (100%)
+ */
+
 fun main() = (System.`in`.bufferedReader().run {
     val bw = System.out.bufferedWriter()
     val stopWords = readLine().split(";")
