@@ -1,3 +1,7 @@
+/**
+ * @author Jacob Huebner
+ */
+
 import java.io.BufferedReader
 import java.util.*
 import kotlin.math.absoluteValue
