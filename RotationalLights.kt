@@ -1,22 +1,47 @@
+/**
+ * @author Jacob Huebner
+ * 
+ * Scored 24/24 (100%)
+ */
+
 import java.io.BufferedReader
 
-fun main() = (System.`in`.bufferedReader().run {
-    val bw = System.out.bufferedWriter()
-
-    val times = readInt()
-
-    for (time in 0 until times) {
-
+fun main() {
+    val br = System.`in`.bufferedReader()
+    val n = br.readInt()
+    val t = br.readLong()
+    val on = LongArray(n) { br.readLong() }
+    val f = on.first()
+    val on2 = on.map { it - f }
+    val on3 = on2.mapIndexed { index, l ->
+        if (index == on.lastIndex) {
+            t - l
+        } else {
+            on2[index + 1] - l
+        }
     }
+    val ans = prefixFunction(on3)
+    val num = n / (n - ans.last())
+    println((t - 1)/num)
+}
 
-    bw.close()
-} to Unit).second
+
+private fun prefixFunction(s: List<Long>): IntArray {
+    val pi = IntArray(s.size)
+    for (i in 1 until s.size) {
+        var j = pi[i - 1]
+        while (j > 0 && s[i] != s[j]) j = pi[j - 1]
+        if (s[i] == s[j]) j++
+        pi[i] = j
+    }
+    return pi
+}
+
 
 private const val SPACE_INT = ' '.toInt()
 private const val ZERO_INT = '0'.toInt()
 private const val NL_INT = '\n'.toInt()
 
-@Suppress("DuplicatedCode")
 private fun BufferedReader.readInt(): Int {
     var ret = read()
     while (ret <= SPACE_INT) {
@@ -43,7 +68,6 @@ private fun BufferedReader.readInt(): Int {
     return if (neg) -ret else ret
 }
 
-@Suppress("DuplicatedCode")
 private fun BufferedReader.readLong(): Long {
     var ret = read().toLong()
     while (ret <= SPACE_INT) {
@@ -68,32 +92,4 @@ private fun BufferedReader.readLong(): Long {
         reset()
     }
     return if (neg) -ret else ret
-}
-
-@Suppress("DuplicatedCode")
-private fun BufferedReader.readWord(): String {
-    var ret = read()
-    while (ret <= SPACE_INT && ret != -1) {
-        ret = read()
-    }
-    if (ret == -1) {
-        return ""
-    }
-    var cb = CharArray(32)
-    var idx = 0
-    while (ret > SPACE_INT) {
-        if (idx == cb.size) {
-            cb = cb.copyOf(cb.size shl 1)
-        }
-        cb[idx++] = ret.toChar()
-        ret = read()
-    }
-    while (ret <= SPACE_INT && ret != -1 && ret != NL_INT) {
-        mark(1)
-        ret = read()
-    }
-    if (ret > SPACE_INT) {
-        reset()
-    }
-    return String(cb, 0, idx)
 }
